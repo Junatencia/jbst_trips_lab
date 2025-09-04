@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.sql": "postgres"         // Archivos en /postgres se tratan como PostgreSQL    
+   },
+  "python.pythonPath": ".venv/bin/python",
+  "python.envFile": "${workspaceFolder}/.env"
+}
