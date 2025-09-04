@@ -1,0 +1,25 @@
+# API framework
+fastapi==0.111.0
+uvicorn[standard]==0.30.0
+
+# Database
+sqlalchemy==2.0.31
+psycopg2-binary==2.9.9
+
+# Data handling
+pandas==2.2.2
+geohash2==1.1.0
+
+# Environment variables
+python-dotenv==1.0.1
+
+# Async features (optional, recommended for FastAPI)
+httpx==0.27.0
+
+# Jupyter & dev tools
+jupyter==1.0.0
+notebook==7.2.0
+ipykernel==6.29.4
+
+# WebSockets (for real-time ingestion status)
+websockets==12.0
