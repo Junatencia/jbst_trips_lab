@@ -6,11 +6,11 @@ RUN apt-get update && apt-get install -y gcc libpq-dev && rm -rf /var/lib/apt/li
 
 
 # Copy requirements.txt from api/ when building from project root
-COPY api/requirements.txt .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy all app files from api/ when building from project root
-COPY api/. .
+COPY . .
 
 EXPOSE 8000
 # default command (api service overrides with uvicorn in compose)

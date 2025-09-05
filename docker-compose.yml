@@ -41,7 +41,7 @@ services:
       - redis
     volumes:
       - ./:/app
-    command: ["celery", "-A", "celery_app", "worker", "--loglevel=info", "--concurrency=2"]
+    command: celery -A celery_app.celery_app worker --loglevel=info --concurrency=2
 
 volumes:
   db_data:
