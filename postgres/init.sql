@@ -21,6 +21,25 @@ CREATE INDEX IF NOT EXISTS idx_trips_datetime ON trips(trip_datetime);
 CREATE INDEX IF NOT EXISTS idx_trips_origin ON trips USING GIST (origin_coord);
 CREATE INDEX IF NOT EXISTS idx_trips_destination ON trips USING GIST (destination_coord);
 
+-- Durable ingestion status (one row per job)
+CREATE TABLE IF NOT EXISTS ingestion_status (
+  job_id TEXT PRIMARY KEY,
+  filename TEXT,              -- the uploaded CSV filename
+  submitted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+  started_at TIMESTAMP WITH TIME ZONE,
+  finished_at TIMESTAMP WITH TIME ZONE,
+  status TEXT,                -- queued|running|completed|failed
+  inserted_so_far BIGINT DEFAULT 0,
+  total_expected BIGINT,      -- if available
+  last_message TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_ingestion_status_status ON ingestion_status(status);
+
+
+CREATE INDEX IF NOT EXISTS idx_ingestion_status_status ON ingestion_status(status);
+
+
 -- View to group trips by geohash + time of day
 CREATE OR REPLACE VIEW trip_groups AS
 SELECT
