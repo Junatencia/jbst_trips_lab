@@ -4,7 +4,7 @@ import uuid
 import shutil
 import json
 from fastapi import FastAPI, UploadFile, WebSocket, WebSocketDisconnect
-from celery_app import celery
+from celery_app import celery_app as celery
 from tasks import ingest_csv_task
 import redis.asyncio as aioredis
 from dotenv import load_dotenv
@@ -16,6 +16,17 @@ UPLOAD_DIR = os.getenv("UPLOAD_DIR", "/app/uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 app = FastAPI(title="Trips API with Celery + WebSockets")
+
+@app.get("/health")
+def healthcheck():
+    try:
+        # check DB connectivity
+        with engine.connect() as conn:
+            conn.execute(text("SELECT 1"))
+        return {"status": "ok", "message": "API healthy and DB reachable"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
 
 # Enqueue ingestion job
 @app.post("/ingest")
